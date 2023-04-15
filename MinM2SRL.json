@@ -1,0 +1,19 @@
+{"env": {
+    "name": "MinWMEnvA1-v0",
+    "attribute_number": 2,
+    "attention_size": 2,
+    "switch_period": 2,
+    "actions": 2,
+    "sample_period": 2,
+    "response_period": 3,
+    "match_delay": 1,
+    "reward_delay": 1
+  },
+  "agent": {
+    "interaction_period": 1,
+    "delay": 0,
+    "penalty": 0,
+    "algorithm": "ppo"
+  }
+}
+

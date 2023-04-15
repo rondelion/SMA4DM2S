@@ -1,0 +1,25 @@
+{
+  "dump_cycle": 100,
+  "in_dim": 8,
+  "env": {
+    "name": "MinWMEnvA1-v0",
+    "attribute_number": 3,
+    "attention_size": 3,
+    "switch_period": 2,
+    "actions": 2,
+    "sample_period": 2,
+    "response_period": 3,
+    "match_delay": 1,
+    "reward_delay": 1
+  },
+  "agent": {
+    "min_success_rate": 0.99,
+    "actors": ["attention", "wm_onoff", "action"],
+    "attention": {
+    },
+    "WM":{
+    },
+    "external":{
+    }
+  }
+}

@@ -1,0 +1,331 @@
+{
+ "Header": {
+  "Type": "A",
+  "Name": "SMA4DM2S",
+  "Base": "SMA4DM2S",
+  "Comment": "An agent for a Minimal Matching to Sample Task with BriCA"
+ },
+ "Modules": [
+  {
+   "Name": "CognitiveArchitecture",
+   "Comment": "the whole:Find a policy to execute the matching to sample task",
+   "SubModules": [
+    "EpisodicMemory",
+    "ActionChooser",
+    "Gate"
+   ],
+   "Ports": [
+    {
+     "Name": "done",
+     "Type": "Input",
+     "Shape": [
+      1
+     ]
+    },
+    {
+     "Name": "observation",
+     "Type": "Input",
+     "Shape": [
+      15
+     ]
+    },
+    {
+     "Name": "reward",
+     "Type": "Input",
+     "Shape": [
+      1
+     ]
+    },
+    {
+     "Name": "token_in",
+     "Type": "Input",
+     "Shape": [
+      1
+     ]
+    },
+    {
+     "Name": "action",
+     "Type": "Output",
+     "Shape": [
+      4
+     ]
+    },
+    {
+     "Name": "token_out",
+     "Type": "Output",
+     "Shape": [
+      1
+     ]
+    }
+   ]
+  },
+  {
+   "Name": "EpisodicMemory",
+   "Comment": "episodic memory:Create policies",
+   "ImplClass": "SMA4DM2S.EpisodicMemory",
+   "Ports": [
+    {
+     "Name": "action",
+     "Type": "Input",
+     "Shape": [
+      4
+     ]
+    },
+    {
+     "Name": "attention",
+     "Type": "Input",
+     "Shape": [
+      5
+     ]
+    },
+    {
+     "Name": "done",
+     "Type": "Input",
+     "Shape": [
+      1
+     ]
+    },
+    {
+     "Name": "gated_obs",
+     "Type": "Input",
+     "Shape": [
+      15
+     ]
+    },
+    {
+     "Name": "obs_changed",
+     "Type": "Input",
+     "Shape": [
+      1
+     ]
+    },
+    {
+     "Name": "reward",
+     "Type": "Input",
+     "Shape": [
+      1
+     ]
+    },
+    {
+     "Name": "token_in",
+     "Type": "Input",
+     "Shape": [
+      1
+     ]
+    },
+    {
+     "Name": "action",
+     "Type": "Output",
+     "Shape": [
+      4
+     ]
+    },
+    {
+     "Name": "attention",
+     "Type": "Output",
+     "Shape": [
+      5
+     ]
+    },
+    {
+     "Name": "token_out",
+     "Type": "Output",
+     "Shape": [
+      1
+     ]
+    }
+   ]
+  },
+  {
+   "Name": "ActionChooser",
+   "Comment": "action chooser:Select external output",
+   "ImplClass": "SMA4DM2S.ActionChooser",
+   "Ports": [
+    {
+     "Name": "action",
+     "Type": "Input",
+     "Shape": [
+      4
+     ]
+    },
+    {
+     "Name": "token_in",
+     "Type": "Input",
+     "Shape": [
+      1
+     ]
+    },
+    {
+     "Name": "action",
+     "Type": "Output",
+     "Shape": [
+      4
+     ]
+    },
+    {
+     "Name": "token_out",
+     "Type": "Output",
+     "Shape": [
+      1
+     ]
+    }
+   ]
+  },
+  {
+   "Name": "Gate",
+   "Comment": "observation gate:Mask non-attended observation",
+   "ImplClass": "SMA4DM2S.Gate",
+   "Ports": [
+    {
+     "Name": "attention",
+     "Type": "Input",
+     "Shape": [
+      5
+     ]
+    },
+    {
+     "Name": "observation",
+     "Type": "Input",
+     "Shape": [
+      15
+     ]
+    },
+    {
+     "Name": "token_in",
+     "Type": "Input",
+     "Shape": [
+      1
+     ]
+    },
+    {
+     "Name": "attention",
+     "Type": "Output",
+     "Shape": [
+      5
+     ]
+    },
+    {
+     "Name": "gated_obs",
+     "Type": "Output",
+     "Shape": [
+      15
+     ]
+    },
+    {
+     "Name": "obs_changed",
+     "Type": "Output",
+     "Shape": [
+      1
+     ]
+    },
+    {
+     "Name": "token_out",
+     "Type": "Output",
+     "Shape": [
+      1
+     ]
+    }
+   ]
+  }
+ ],
+ "Connections": [
+  {
+   "Name": "CognitiveArchitecture-Gate",
+   "FromModule": "CognitiveArchitecture",
+   "FromPort": "observation",
+   "ToModule": "Gate",
+   "ToPort": "observation"
+  },
+  {
+   "Name": "CognitiveArchitecture-Gate",
+   "FromModule": "CognitiveArchitecture",
+   "FromPort": "token_in",
+   "ToModule": "Gate",
+   "ToPort": "token_in"
+  },
+  {
+   "Name": "CognitiveArchitecture-EpisodicMemory",
+   "FromModule": "CognitiveArchitecture",
+   "FromPort": "reward",
+   "ToModule": "EpisodicMemory",
+   "ToPort": "reward"
+  },
+  {
+   "Name": "CognitiveArchitecture-EpisodicMemory",
+   "FromModule": "CognitiveArchitecture",
+   "FromPort": "done",
+   "ToModule": "EpisodicMemory",
+   "ToPort": "done"
+  },
+  {
+   "Name": "Gate-EpisodicMemory",
+   "FromModule": "Gate",
+   "FromPort": "gated_obs",
+   "ToModule": "EpisodicMemory",
+   "ToPort": "gated_obs"
+  },
+  {
+   "Name": "Gate-EpisodicMemory",
+   "FromModule": "Gate",
+   "FromPort": "attention",
+   "ToModule": "EpisodicMemory",
+   "ToPort": "attention"
+  },
+  {
+   "Name": "Gate-EpisodicMemory",
+   "FromModule": "Gate",
+   "FromPort": "obs_changed",
+   "ToModule": "EpisodicMemory",
+   "ToPort": "obs_changed"
+  },
+  {
+   "Name": "Gate-EpisodicMemory",
+   "FromModule": "Gate",
+   "FromPort": "token_out",
+   "ToModule": "EpisodicMemory",
+   "ToPort": "token_in"
+  },
+  {
+   "Name": "EpisodicMemory-Gate",
+   "FromModule": "EpisodicMemory",
+   "FromPort": "attention",
+   "ToModule": "Gate",
+   "ToPort": "attention"
+  },
+  {
+   "Name": "EpisodicMemory-ActionChooser",
+   "FromModule": "EpisodicMemory",
+   "FromPort": "action",
+   "ToModule": "ActionChooser",
+   "ToPort": "action"
+  },
+  {
+   "Name": "EpisodicMemory-ActionChooser",
+   "FromModule": "EpisodicMemory",
+   "FromPort": "token_out",
+   "ToModule": "ActionChooser",
+   "ToPort": "token_in"
+  },
+  {
+   "Name": "ActionChooser-EpisodicMemory",
+   "FromModule": "ActionChooser",
+   "FromPort": "action",
+   "ToModule": "EpisodicMemory",
+   "ToPort": "action"
+  },
+  {
+   "Name": "ActionChooser-CognitiveArchitecture",
+   "FromModule": "ActionChooser",
+   "FromPort": "action",
+   "ToModule": "CognitiveArchitecture",
+   "ToPort": "action"
+  },
+  {
+   "Name": "ActionChooser-CognitiveArchitecture",
+   "FromModule": "ActionChooser",
+   "FromPort": "token_out",
+   "ToModule": "CognitiveArchitecture",
+   "ToPort": "token_out"
+  }
+ ]
+}
