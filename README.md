@@ -6,7 +6,7 @@ A Sequence Memory Agent for a Delayed Match-to-Sample Task
 
 * MinWMEnvA1.py: a simple delayed [Match-to-Sample task](https://en.wikipedia.org/wiki/Match-to-sample_task)
 
-Details are in [this article].
+Details are in [this article](http://rondelionai.blogspot.com/2023/04/solving-delayed-match-to-sample-task.html).
 
 ## How to Install
 * Clone the repository
