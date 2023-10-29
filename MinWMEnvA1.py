@@ -8,7 +8,7 @@ class MinWMEnvA1(gym.Env):
         self.attention_size = config["attention_size"]
         self.atttibute_number = config["attribute_number"]
         self.obs_dim = self.attention_size * (self.atttibute_number + 2)
-        self.observation_space = gym.spaces.Box(low=np.zeros(self.obs_dim, dtype=np.int),
+        self.observation_space = gym.spaces.Box(low=np.zeros(self.obs_dim, dtype='int'),
                                                 high=np.ones(self.obs_dim, dtype='int'))
         self.task_switch = 0
         self.sample = np.zeros(self.atttibute_number, dtype='int')

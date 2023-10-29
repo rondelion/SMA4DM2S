@@ -37,7 +37,11 @@ def main():
     # Create agent and environment
     env = gym.make(config['env']['name'], config=config['env'])
     environment = Environment.create(environment=env, max_episode_timesteps=15)
-    agent = Agent.create(agent=sys.argv[2], environment=environment, batch_size=10)
+    agent_type = sys.argv[2]
+    if agent_type == "dqn":
+        agent = Agent.create(agent=agent_type, environment=environment, batch_size=10, memory=100)
+    else:
+        agent = Agent.create(agent=agent_type, environment=environment, batch_size=10)
 
     for _ in range(100):
         train(100, agent, environment)
